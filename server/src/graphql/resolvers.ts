@@ -6,6 +6,11 @@ class SpaceXClient {
         return fetch(API_BASE + "/rockets")
             .then((res) => res.json());
     }
+
+    getLaunchesForRocket(rocketId) {
+        return fetch(API_BASE + `/launches?rocketid=${rocketId}`)
+            .then((res) => res.json());
+    }
 };
 
 class Rocket {
@@ -13,7 +18,7 @@ class Rocket {
     constructor(rocketData) {
         this.data = rocketData
     }
-    get rocketid() {
+    get rocketId() {
         return this.data.rocketid
     }
     get id() {
@@ -24,6 +29,21 @@ class Rocket {
     }
     get active() {
         return this.data.active
+    }
+
+    async launches() {
+        const launches = await ApiClient.getLaunchesForRocket(this.rocketId);
+        return launches.map((launch) => new Launch(launch))
+    }
+};
+
+class Launch {
+    data: any;
+    constructor(launchData) {
+        this.data = launchData
+    }
+    get missionName() {
+        return this.data.mission_name
     }
 };
 

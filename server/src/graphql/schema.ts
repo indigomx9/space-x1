@@ -2,10 +2,15 @@ import { gql } from "apollo-server-express";
 
 export const typeDefs = gql`
     type Rocket {
-        rocketid: Int!
+        rocketId: Int!
         id: String!
         name: String!
         active: Boolean!
+        launches: [Launch!]!
+    }
+
+    type Launch {
+        missionName: String!
     }
 
     type Query {
