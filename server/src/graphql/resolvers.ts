@@ -30,7 +30,6 @@ class Rocket {
     get active() {
         return this.data.active
     }
-
     async launches() {
         const launches = await ApiClient.getLaunchesForRocket(this.rocketId);
         return launches.map((launch) => new Launch(launch))
